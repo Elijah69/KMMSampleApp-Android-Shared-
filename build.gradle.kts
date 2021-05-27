@@ -2,7 +2,7 @@
 buildscript {
     val usr by extra(properties["dflt.usr"].toString())
     val pwd by extra(properties["dflt.pwd"].toString())
-    val kotlinVersion by extra("1.5.20-M1-107")
+    val kotlinVersion by extra("1.5.30-dev-1243")
     repositories {
         maven {
             url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
