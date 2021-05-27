@@ -3,19 +3,16 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("native.cocoapods")
 }
+
+version ="0.1"
 
 kotlin {
     //System.getenv().forEach { t, u -> println("$t $u") }
     android()
 
-    watchosX64() {
-        binaries {
-            framework {
-                baseName = "watch"
-            }
-        }
-    }
+    watchosX64() { }
 //    ios() {
 //        binaries {
 //            framework {
@@ -29,12 +26,14 @@ kotlin {
         else
             ::iosX64
 
-    iosTarget("ios") {
-        binaries {
-            framework {
-                baseName = "shared"
-            }
-        }
+    iosTarget("ios") { }
+    cocoapods {
+        watchos.deploymentTarget = "7.4"
+        ios.deploymentTarget = "14.1"
+        summary = "shared pod"
+        homepage = "no page"
+        frameworkName = "shared"
+        podfile = project.file("../../SepparatedApp(iOS)/Podfile")
     }
     sourceSets {
         val commonMain by getting

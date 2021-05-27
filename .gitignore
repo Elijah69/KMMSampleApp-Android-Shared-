@@ -17,3 +17,4 @@ local.properties
 *.log
 .idea
 shared/.gradle
+shared/shared.podspec
