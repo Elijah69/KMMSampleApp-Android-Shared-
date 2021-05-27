@@ -53,7 +53,7 @@ kotlin {
         }
         val iosMain by getting
         val iosTest by getting
-        val watchosMain by getting
+        val watchosX64Main by getting
     }
 }
 
