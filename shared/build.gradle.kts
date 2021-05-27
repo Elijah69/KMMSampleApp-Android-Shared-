@@ -9,33 +9,33 @@ kotlin {
     //System.getenv().forEach { t, u -> println("$t $u") }
     android()
 
-    watchos() {
+    watchosX64() {
         binaries {
             framework {
                 baseName = "watch"
             }
         }
     }
-    ios() {
-        binaries {
-            framework {
-                baseName = "ios"
-            }
-        }
-    }
-//    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
-//        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
-//            ::iosArm64
-//        else
-//            ::iosX64
-//
-//    iosTarget("ios") {
+//    ios() {
 //        binaries {
 //            framework {
-//                baseName = "shared"
+//                baseName = "ios"
 //            }
 //        }
 //    }
+    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
+        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
+            ::iosArm64
+        else
+            ::iosX64
+
+    iosTarget("ios") {
+        binaries {
+            framework {
+                baseName = "shared"
+            }
+        }
+    }
     sourceSets {
         val commonMain by getting
         val commonTest by getting {
