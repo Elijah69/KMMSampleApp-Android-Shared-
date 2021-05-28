@@ -2,6 +2,7 @@
 buildscript {
     val usr by extra(properties["dflt.usr"].toString())
     val pwd by extra(properties["dflt.pwd"].toString())
+    val sql_delight_version by extra("1.5.0")
     val kotlinVersion by extra("1.5.30-dev-1320")
     repositories {
         maven {
@@ -26,6 +27,7 @@ buildscript {
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("com.android.tools.build:gradle:4.2.1")
+        classpath("com.squareup.sqldelight:gradle-plugin:$sql_delight_version")
     }
 }
 
