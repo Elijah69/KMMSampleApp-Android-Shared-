@@ -1,42 +1,55 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("native.cocoapods")
+    kotlin("plugin.serialization") version("1.5.0")
 }
 
-version ="0.1"
+object Versions {
+    val datatime = "0.2.1"
+    val junit = "4.13.2"
+    val coroutines = "1.5.0"
+    val serialization = "1.2.1"
+}
 
 kotlin {
     //System.getenv().forEach { t, u -> println("$t $u") }
     android()
 
-    watchosX64() { }
-//    ios() {
+    watchos() {
+        binaries {
+            framework {
+                baseName = "watch"
+            }
+        }
+    }
+    ios() {
+        binaries {
+            framework {
+                baseName = "ios"
+            }
+        }
+    }
+//    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
+//        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
+//            ::iosArm64
+//        else
+//            ::iosX64
+//
+//    iosTarget("ios") {
 //        binaries {
 //            framework {
-//                baseName = "ios"
+//                baseName = "shared"
 //            }
 //        }
 //    }
-    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
-        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
-            ::iosArm64
-        else
-            ::iosX64
-
-    iosTarget("ios") { }
-    cocoapods {
-        watchos.deploymentTarget = "7.4"
-        ios.deploymentTarget = "14.1"
-        summary = "shared pod"
-        homepage = "no page"
-        frameworkName = "shared"
-        podfile = project.file("../../SepparatedApp(iOS)/Podfile")
-    }
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:${Versions.datatime}")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
@@ -47,12 +60,12 @@ kotlin {
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
+                implementation("junit:junit:${Versions.junit}")
             }
         }
         val iosMain by getting
         val iosTest by getting
-        val watchosX64Main by getting
+        val watchosMain by getting
     }
 }
 
