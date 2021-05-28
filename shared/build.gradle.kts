@@ -2,6 +2,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     kotlin("plugin.serialization") version("1.5.0")
+    id("com.squareup.sqldelight")
 }
 
 object Versions {
@@ -9,6 +10,8 @@ object Versions {
     val junit = "4.13.2"
     val coroutines = "1.5.0"
     val serialization = "1.2.1"
+    val ktor_version = "1.5.4"
+    val sql_delight_version = "1.5.0"
 }
 
 kotlin {
@@ -48,6 +51,8 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:${Versions.datatime}")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}")
+                implementation("io.ktor:ktor-client-core:${Versions.ktor_version}")
+                implementation("com.squareup.sqldelight:runtime:${Versions.sql_delight_version}")
             }
         }
         val commonTest by getting {
@@ -56,19 +61,33 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-android:${Versions.ktor_version}")
+                implementation("com.squareup.sqldelight:android-driver:${Versions.sql_delight_version}")
+            }
+        }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:${Versions.junit}")
             }
         }
-        val iosMain by getting
+        val iosMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-ios:${Versions.ktor_version}")
+                implementation("com.squareup.sqldelight:native-driver:${Versions.sql_delight_version}")
+            }
+        }
         val iosTest by getting
         val watchosMain by getting
     }
 }
-
+sqldelight {
+    database("AppDatabase") {
+        packageName = "com.example.db"
+    }
+}
 android {
     compileSdkVersion(30)
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
