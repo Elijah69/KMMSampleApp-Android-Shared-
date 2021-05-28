@@ -1,8 +1,14 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("plugin.serialization") version("1.5.0")
+}
+
+object Versions {
+    val datatime = "0.2.1"
+    val junit = "4.13.2"
+    val coroutines = "1.5.0"
+    val serialization = "1.2.1"
 }
 
 kotlin {
@@ -37,7 +43,13 @@ kotlin {
 //        }
 //    }
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:${Versions.datatime}")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
@@ -48,7 +60,7 @@ kotlin {
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
+                implementation("junit:junit:${Versions.junit}")
             }
         }
         val iosMain by getting
