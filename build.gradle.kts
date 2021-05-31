@@ -2,8 +2,9 @@
 buildscript {
     val usr by extra(properties["dflt.usr"].toString())
     val pwd by extra(properties["dflt.pwd"].toString())
-    val sql_delight_version by extra("1.5.0")
+    val sql_delight_version by extra("1.6.0-SNAPSHOT")
     val kotlinVersion by extra("1.5.30-dev-1320")
+    val agpVersion by extra("4.2.1")
     repositories {
         maven {
             url = uri("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
@@ -19,6 +20,12 @@ buildscript {
                 password = pwd
             }
         }
+        maven {
+            url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
+        }
+        maven {
+            url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+        }
         gradlePluginPortal()
         jcenter()
         google()
@@ -26,7 +33,7 @@ buildscript {
     }
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-        classpath("com.android.tools.build:gradle:4.2.1")
+        classpath("com.android.tools.build:gradle:$agpVersion")
         classpath("com.squareup.sqldelight:gradle-plugin:$sql_delight_version")
     }
 }
@@ -48,6 +55,12 @@ allprojects {
                 username = usr
                 password = pwd
             }
+        }
+        maven {
+            url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
+        }
+        maven {
+            url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
         }
         google()
         jcenter()

@@ -13,8 +13,8 @@ object Versions {
     val junit = "4.13.2"
     val coroutines = "1.5.0"
     val serialization = "1.2.1"
-    val ktor_version = "1.5.4"
-    val sql_delight_version = "1.5.0"
+    val ktor_version = "2.0.0-eap-138"
+    val sql_delight_version = "1.6.0-SNAPSHOT"
 }
 
 version ="0.1"
@@ -22,9 +22,28 @@ version ="0.1"
 kotlin {
     //System.getenv().forEach { t, u -> println("$t $u") }
     android()
-
-    watchosX64() { }
-//    ios() {
+    //ktor don't work with watchosX64 currently
+    watchosArm64(){
+        binaries {
+            framework {
+                baseName = "watch"
+            }
+        }
+    }
+    ios() {
+        binaries {
+            framework {
+                baseName = "ios"
+            }
+        }
+    }
+//    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
+//        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
+//            ::iosArm64
+//        else
+//            ::iosX64
+//
+//    iosTarget("ios") {
 //        binaries {
 //            framework {
 //                baseName = "ios"
@@ -81,7 +100,7 @@ kotlin {
             }
         }
         val iosTest by getting
-        val watchosX64Main by getting
+        val watchosArm64Main by getting
     }
 }
 sqldelight {
