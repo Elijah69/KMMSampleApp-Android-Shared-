@@ -22,14 +22,14 @@ kotlin {
     //ktor don't work with watchosX64 currently
     watchosArm64(){
         binaries {
-            framework {
+            framework("watch") {
                 baseName = "watch"
             }
         }
     }
     ios() {
         binaries {
-            framework {
+            framework("ios") {
                 baseName = "ios"
             }
         }
