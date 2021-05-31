@@ -19,18 +19,20 @@ object Versions {
 kotlin {
     //System.getenv().forEach { t, u -> println("$t $u") }
     android()
+    val watchFrameworkName = "watch"
     //ktor don't work with watchosX64 currently
     watchosArm64(){
         binaries {
-            framework("watch") {
-                baseName = "watch"
+            framework(watchFrameworkName) {
+                baseName = watchFrameworkName
             }
         }
     }
+    val iosFrameworkName = "ios"
     ios() {
         binaries {
-            framework("ios") {
-                baseName = "ios"
+            framework(iosFrameworkName) {
+                baseName = iosFrameworkName
             }
         }
     }
