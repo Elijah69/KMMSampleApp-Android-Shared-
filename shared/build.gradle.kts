@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
@@ -10,15 +12,15 @@ object Versions {
     val junit = "4.13.2"
     val coroutines = "1.5.0"
     val serialization = "1.2.1"
-    val ktor_version = "1.5.4"
-    val sql_delight_version = "1.5.0"
+    val ktor_version = "2.0.0-eap-138"
+    val sql_delight_version = "1.6.0-SNAPSHOT"
 }
 
 kotlin {
     //System.getenv().forEach { t, u -> println("$t $u") }
     android()
-
-    watchos() {
+    //ktor don't work with watchosX64 currently
+    watchosArm64(){
         binaries {
             framework {
                 baseName = "watch"
@@ -80,7 +82,7 @@ kotlin {
             }
         }
         val iosTest by getting
-        val watchosMain by getting
+        val watchosArm64Main by getting
     }
 }
 sqldelight {
