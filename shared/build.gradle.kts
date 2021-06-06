@@ -25,25 +25,12 @@ kotlin {
     //ktor don't work with watchosX64 currently
     watchosArm64(){
         binaries {
-            framework {
+            framework("watch") {
                 baseName = "watch"
             }
         }
     }
-    ios() {
-        binaries {
-            framework {
-                baseName = "ios"
-            }
-        }
-    }
-//    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
-//        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
-//            ::iosArm64
-//        else
-//            ::iosX64
-//
-//    iosTarget("ios") {
+//    ios() {
 //        binaries {
 //            framework {
 //                baseName = "ios"
