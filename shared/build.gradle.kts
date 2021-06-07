@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
     kotlin("multiplatform")
@@ -51,6 +52,8 @@ kotlin {
         homepage = "no page"
         frameworkName = "shared"
         podfile = project.file("../../SepparatedApp(iOS)/Podfile")
+        xcodeConfigurationToNativeBuildType["QA"] = NativeBuildType.RELEASE
+        pod("AFNetworking")
     }
     sourceSets {
         val commonMain by getting {

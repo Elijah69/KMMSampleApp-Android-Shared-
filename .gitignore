@@ -18,3 +18,4 @@ local.properties
 .idea
 shared/.gradle
 shared/shared.podspec
+*.podspec

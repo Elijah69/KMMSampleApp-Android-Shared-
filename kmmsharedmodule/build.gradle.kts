@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("native.cocoapods")
 }
 
 kotlin {
@@ -13,13 +14,16 @@ kotlin {
             ::iosArm64
         else
             ::iosX64
-
-    iosTarget("ios") {
-        binaries {
-            framework {
-                baseName = "kmmsharedmodule"
-            }
-        }
+    version = "0.1"
+    iosTarget("ios") { }
+    cocoapods {
+        watchos.deploymentTarget = "7.4"
+        ios.deploymentTarget = "14.1"
+        summary = "shared pod"
+        homepage = "no page"
+        frameworkName = "shared2"
+        podfile = project.file("../../SepparatedApp(iOS)/Podfile")
+        xcodeConfigurationToNativeBuildType["QA"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.RELEASE
     }
     sourceSets {
         val commonMain by getting
